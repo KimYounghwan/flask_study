@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>도서 메인</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      padding: 15px;
+      font-family: Arial, sans-serif;
+      background-color: #f5f5f5;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: auto;
+      background: white;
+      border: 2px solid #ccc;
+      min-height: 600px;
+    }
+
+    /* 상단 메뉴 */
+    .header {
+      display: flex;
+      justify-content: center;
+      gap: 100px;
+      padding: 25px;
+      border-bottom: 2px solid #ccc;
+      font-size: 40px;
+      font-weight: bold;
+    }
+
+    .header a {
+      text-decoration: none;
+      color: black;
+    }
+    .header a:hover {
+      text-decoration: underline;
+      color: black;
+    }
+
+    /* 내용 */
+    .content {
+      padding: 60px 40px;
+    }
+
+    /* 통계 박스 */
+    .summary-box {
+      border: 1px solid #999;
+      padding: 60px 30px;
+      display: flex;
+      justify-content: center;
+      gap: 50px;
+    }
+
+    .card {
+      width: 170px;
+      height: 140px;
+      border: 1px solid #999;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      font-size: 28px;
+      line-height: 1.5;
+      background-color: #fafafa;
+    }
+
+  </style>
+  {% block style %}
+
+  {% endblock %}
+</head>
+<body>
+
+  <div class="container">
+
+    <!-- 상단 -->
+    <div class="header">
+      <a href="/book/list">도서</a>
+      <a href="/book_review/list">독후감</a>
+    </div>
+
+    {% block content %}
+    {% endblock %}
+
+  </div>
+
+</body>
+</html>

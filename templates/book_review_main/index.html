@@ -1,0 +1,22 @@
+{% extends "book_review_main/base.html" %}
+
+    {% block content %}
+    <!-- 본문 -->
+    <div class="content">
+
+      <div class="summary-box">
+
+        <div class="card">
+          총도서<br>
+          {{count_book}}권
+        </div>
+
+        <div class="card">
+          총독후감<br>
+          15개
+        </div>
+
+      </div>
+
+    </div>
+    {% endblock %}

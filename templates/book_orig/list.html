@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>도서목록</title>
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 30px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    th, td {
+      border: 1px solid #ccc;
+      padding: 10px;
+      text-align: center;
+    }
+
+    th {
+      background-color: #f0f0f0;
+    }
+
+    .btn {
+      display: inline-block;
+      margin-top: 20px;
+      padding: 10px 20px;
+      background-color: #3498db;
+      color: white;
+      text-decoration: none;
+    }
+  </style>
+</head>
+
+<body>
+
+  <h2>도서목록</h2>
+
+  <table>
+    <thead>
+      <tr>
+        <th>도서번호</th>
+        <th>도서제목</th>
+        <th>저자</th>
+        <th>가격</th>
+      </tr>
+    </thead>
+
+    <tbody>
+
+      {% for book in book_list %}
+
+      <tr>
+        <td>{{ book.book_id }}</td>
+        <td><a href="/book/detail/{{ book.book_id }}">{{ book.title }}</a></td>
+        <td>{{ book.author }}</td>
+        <td>{{ book.price }}</td>
+      </tr>
+
+      {% endfor %}
+
+    </tbody>
+  </table>
+
+  <a href="/book/form" class="btn">
+    도서등록
+  </a>
+
+</body>
+</html>

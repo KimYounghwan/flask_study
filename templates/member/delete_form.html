@@ -1,0 +1,17 @@
+{% extends 'member/base.html' %}
+
+{% block title %}회원삭제폼{% endblock %}
+{% block h1 %}회원삭제폼{% endblock %}
+
+{% block content %}
+    <form action="/member/delete_action" method="POST">
+        아이디 : 
+        <input type="text" name="mid" value="{{mem.mid}}" readonly><br>
+        이름 : 
+        <input type="text" name="mnm" value="{{mem.mnm}}"><br>
+        삭제하려는 회원의 비밀번호를 입력하세요 : <br>
+        <input type="password" name="mpw" ><br>
+        <input type="submit" value="회원삭제">
+        <input type="button" onclick="history.back()" value="삭제 취소">
+    </form>
+{% endblock %}

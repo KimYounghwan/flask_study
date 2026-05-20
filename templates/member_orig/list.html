@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>회원목록</title>
+</head>
+<body>
+    <h1>회원목록</h1>    
+    <div> <a href="/member/insert_form">회원등록</a> </div>
+    <div>회원수 : {{mem_count}}</div>
+    <hr>
+    {% for mem in members %}
+        <p><a href="/member/{{mem.mid}}">{{mem.mnm}}({{mem.mid}})</a></p>
+    {% endfor %}
+</body>
+</html>

@@ -1,0 +1,132 @@
+{% extends "book_review_main/base.html" %}
+
+
+{% block style %}
+
+  <title>도서 상세</title>
+<script>
+  function deleteBook(book_id) {
+
+    const result = confirm("정말 삭제하시겠습니까?");
+
+    if (result) {
+      location.href = "/book/delete/" + book_id;
+    }
+
+  }
+</script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 30px;
+    }
+
+    .box {
+      width: 500px;
+      border: 1px solid #ccc;
+      padding: 20px;
+    }
+
+    .item {
+      margin-bottom: 15px;
+    }
+
+    .label {
+      font-weight: bold;
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 10px 20px;
+      color: white;
+      text-decoration: none;
+      border: none;
+      cursor: pointer;
+    }
+
+    .edit-btn {
+      background-color: #3498db;
+    }
+
+    .delete-btn {
+      background-color: #e74c3c;
+    }
+
+    .list-btn {
+      background-color: #777;
+    }
+
+    .btn-group {
+      margin-top: 20px;
+    }
+  </style>
+{% endblock %}
+
+{% block content %}
+
+  <h2>도서 상세페이지</h2>
+
+  <div class="box">
+
+    <div class="item">
+      <span class="label">도서번호 :</span>
+      {{ book.book_id }}
+    </div>
+
+    <div class="item">
+      <span class="label">ISBN :</span>
+      {{ book.isbn }}
+    </div>
+
+    <div class="item">
+      <span class="label">도서제목 :</span>
+      {{ book.title }}
+    </div>
+
+    <div class="item">
+      <span class="label">저자 :</span>
+      {{ book.author }}
+    </div>
+
+    <div class="item">
+      <span class="label">출판사 :</span>
+      {{ book.publisher }}
+    </div>
+
+    <div class="item">
+      <span class="label">출판날짜 :</span>
+      {{ book.publish_date }}
+    </div>
+
+    <div class="item">
+      <span class="label">가격 :</span>
+      {{ book.price }}
+    </div>
+
+    <!-- 버튼 영역 -->
+    <div class="btn-group">
+
+      <!-- 수정 -->
+      <a href="/book/update/{{ book.book_id }}"
+         class="btn edit-btn">
+        수정하기
+      </a>
+
+      <!-- 삭제 -->
+      <a href="#"
+        class="btn delete-btn"
+        onclick="deleteBook({{ book.book_id }})">
+        삭제하기
+      </a>
+
+      <!-- 목록 -->
+      <a href="/book/list"
+         class="btn list-btn">
+        목록으로
+      </a>
+
+    </div>
+
+  </div>
+
+{% endblock %}

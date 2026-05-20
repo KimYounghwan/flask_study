@@ -1,0 +1,16 @@
+{% extends 'member/base.html' %}
+
+{% block title %}회원등록{% endblock %}
+{% block h1 %}회원등록폼{% endblock %}
+
+{% block content %}
+    <form action="/member/insert_action" method="POST">
+        아이디 : 
+        <input type="text" name="mid"><br>
+        이름 : 
+        <input type="text" name="mnm"><br>
+        비밀번호: 
+        <input type="password" name="mpw"><br>
+        <input type="submit" value="회원등록">
+    </form>
+{% endblock %}

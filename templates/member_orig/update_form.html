@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>회원수정</title>
+</head>
+<body>
+    <h1>회원수정폼</h1>
+    <div> <a href="/member/list">목록</a> </div>
+    <form action="/member/update_action" method="POST">
+        아이디 : 
+        <input type="text" name="mid" value="{{mem.mid}}" readonly><br>
+        이름 : 
+        <input type="text" name="mnm" value="{{mem.mnm}}"><br>
+        비밀번호: 
+        <input type="password" name="mpw"  value="{{mem.mpw}}"><br>
+        <input type="submit" value="회원수정">
+        <input type="button" onclick="history.back()" value="수정 취소">
+    </form>
+</body>
+</html>

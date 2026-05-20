@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}제목을 교체하세요{% endblock %}</title>
+</head>
+<body>
+    <h1>{% block h1 %}제목을 교체하세요{% endblock %}</h1>
+    <div> <a href="/member/list">목록</a> </div>
+    {% block content %}{% endblock %}
+</body>
+</html>

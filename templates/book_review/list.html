@@ -1,0 +1,97 @@
+{% extends "book_review_main/base.html" %}
+
+{% block style %}
+<style>
+
+  .content {
+    padding: 40px;
+  }
+
+  h2 {
+    margin-bottom: 20px;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+
+  th,
+  td {
+    border: 1px solid #ccc;
+    padding: 12px;
+    text-align: center;
+  }
+
+  th {
+    background-color: #f0f0f0;
+  }
+
+  .btn {
+    display: inline-block;
+    margin-top: 20px;
+    padding: 10px 20px;
+    background-color: #3498db;
+    color: white;
+    text-decoration: none;
+  }
+
+  .btn:hover {
+    background-color: #2980b9;
+  }
+
+</style>
+{% endblock %}
+
+
+{% block content %}
+
+<div class="content">
+
+  <h2>독후감 목록</h2>
+
+  <table>
+
+    <thead>
+      <tr>
+        <th>독후감번호</th>
+        <th>도서제목</th>
+        <th>내용</th>
+        <th>등록일시</th>
+      </tr>
+    </thead>
+
+    <tbody>
+
+      {% for review in book_review_list %}
+
+      <tr>
+        <td>{{ review.review_id }}</td>
+        <td><a href="/book/detail/{{ review.book_id }}"
+             class="book-link">
+
+            {{ review.title }}
+
+          </a></td>
+        <td><a href="/book_review/detail/{{ review.review_id }}"
+             class="review-link">
+
+            {{ review.content }}
+
+          </a></td>
+        <td>{{ review.created_at }}</td>
+      </tr>
+
+      {% endfor %}
+
+    </tbody>
+
+  </table>
+
+  <a href="/book_review/insert" class="btn">
+    독후감등록
+  </a>
+
+</div>
+
+{% endblock %}

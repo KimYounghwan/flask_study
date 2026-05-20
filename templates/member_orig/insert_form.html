@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>회원등록</title>
+</head>
+<body>
+    <h1>회원등록폼</h1>
+    <div> <a href="/member/list">목록</a> </div>
+    <form action="/member/insert_action" method="POST">
+        아이디 : 
+        <input type="text" name="mid"><br>
+        이름 : 
+        <input type="text" name="mnm"><br>
+        비밀번호: 
+        <input type="password" name="mpw"><br>
+        <input type="submit" value="회원등록">
+    </form>
+</body>
+</html>

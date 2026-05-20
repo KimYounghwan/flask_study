@@ -1,0 +1,112 @@
+{% extends "book_review_main/base.html" %}
+
+{% block style %}
+<style>
+
+  .content {
+    padding: 40px;
+  }
+
+  .form-box {
+    width: 500px;
+    margin: auto;
+    border: 1px solid #ccc;
+    padding: 30px;
+    background-color: #fafafa;
+  }
+
+  h2 {
+    text-align: center;
+    margin-bottom: 30px;
+  }
+
+  .form-group {
+    margin-bottom: 20px;
+  }
+
+  label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: bold;
+  }
+
+  select,
+  textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+  }
+
+  textarea {
+    height: 150px;
+    resize: vertical;
+  }
+
+  .btn {
+    width: 100%;
+    padding: 12px;
+    border: none;
+    background-color: #3498db;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+  }
+
+  .btn:hover {
+    background-color: #2980b9;
+  }
+
+</style>
+{% endblock %}
+
+
+{% block content %}
+
+<div class="content">
+
+  <div class="form-box">
+
+    <h2>독후감 등록</h2>
+
+    <form action="/book_review/insert" method="post">
+
+      <!-- 도서 선택 -->
+      <div class="form-group">
+
+        <label>도서선택</label>
+
+        <select name="book_id">
+
+          {% for book in book_list %}
+
+          <option value="{{ book.book_id }}">
+            {{ book.title }}
+          </option>
+
+          {% endfor %}
+
+        </select>
+
+      </div>
+
+      <!-- 독후감 내용 -->
+      <div class="form-group">
+
+        <label>독후감 내용</label>
+
+        <textarea name="content"></textarea>
+
+      </div>
+
+      <!-- 등록 버튼 -->
+      <button type="submit" class="btn">
+        등록하기
+      </button>
+
+    </form>
+
+  </div>
+
+</div>
+
+{% endblock %}

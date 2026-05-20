@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>회원상세</title>
+</head>
+<body>
+    <h1>회원상세</h1>
+    <div> <a href="/member/list">목록</a> </div>
+    <!-- 타겟회원 못찾았을때 -->
+    {% if target_mem == 0 %}
+    <div>{{msg}}</div>
+    {% endif %}
+    
+    <!-- 타겟회원 찾았을때 -->
+    {% if target_mem != 0 %}
+    <div>회원ID : {{target_mem.mid}}</div>
+    <div>회원이름 : {{target_mem.mnm}}</div>
+    {% endif %}
+    <div> <a href="/member/update_form/{{target_mem.mid}}">수정하기</a> </div>
+    <div> <a href="/member/delete_form/{{target_mem.mid}}">삭제하기</a> </div>
+</body>
+</html>

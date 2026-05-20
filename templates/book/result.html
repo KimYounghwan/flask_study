@@ -1,0 +1,36 @@
+{% extends "book_review_main/base.html" %}
+
+{% block style %}
+  <title>{{title}}</title>
+
+  <style>
+
+    h2 {
+      color: #2ecc71;
+      margin-bottom: 20px;
+    }
+
+    p {
+      margin-bottom: 30px;
+      font-size: 18px;
+    }
+
+
+
+  </style>
+{% endblock %}
+
+
+{% block content %}
+
+    <h2>{{title}}</h2>
+
+    <p>
+      {{msg}}
+    </p>
+
+    <a href="{{link}}">
+      {{link_text}}
+    </a>
+
+{% endblock %}
