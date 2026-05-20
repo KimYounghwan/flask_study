@@ -11,6 +11,141 @@ app = Flask(__name__)
 *도서수정 - /book/update/<book_id>
 *도서삭제 - /book/delete/<book_id>
 """
+# ============================================
+# 독후감 삭제
+# URL: /book_review/delete/<review_id>
+# POST -> 삭제 처리
+# ============================================
+@app.route("/book_review/delete/<review_id>", methods=['POST'])
+def book_review_delete(review_id):
+    """
+    독후감 삭제 처리
+    - review_id로 독후감 삭제
+    - 삭제 후 독후감 목록으로 이동
+    """
+    # DB 삭제
+    result = book_reviewdb.delete_review(review_id)
+
+    # 삭제 실패
+    if result == False:
+        return render_template(
+            "book/result.html",
+            title="독후감 삭제 실패",
+            msg="독후감 삭제에 실패했습니다",
+            link="/book_review/list",
+            link_text="독후감목록")
+
+    # 삭제 성공
+    return render_template(
+        "book/result.html",
+        title="독후감 삭제 성공",
+        msg="독후감을 성공적으로 삭제했습니다",
+        link="/book_review/list",
+        link_text="독후감목록")
+# ============================================
+# 독후감 수정
+# URL: /book_review/update/<review_id>
+# GET -> 수정 폼, POST -> 수정 처리
+# ============================================
+@app.route("/book_review/update/<review_id>", methods=['GET', 'POST'])
+def book_review_update(review_id):
+    """
+    독후감 수정 페이지
+    GET: 수정 폼 보여주기 (도서목록 + 기존 독후감 내용)
+    POST: 수정 처리
+    """
+    # GET 요청 - 수정 폼
+    if request.method == "GET":
+        # 기존 독후감 정보 조회
+        review = book_reviewdb.get_review_by_id(review_id)
+
+        # 독후감이 없는 경우
+        if review == None:
+            return render_template(
+                "book/result.html",
+                title="독후감 검색 오류",
+                msg="없거나 삭제된 독후감입니다",
+                link="/book_review/list",
+                link_text="독후감목록")
+
+        # 도서 목록 조회 (select option용)
+        book_list = bookdb.get_all_books()
+
+        # 수정 폼 렌더링
+        return render_template(
+            "book_review/update_form.html",
+            review=review,
+            book_list=book_list)
+
+    # POST 요청 - 수정 처리
+    if request.method == "POST":
+        # 폼 데이터 받기
+        review_id = request.form.get("review_id")
+        book_id = request.form.get("book_id")
+        content = request.form.get("content")
+
+        # DB 수정
+        result = book_reviewdb.update_review(
+            review_id=review_id,
+            book_id=book_id,
+            content=content)
+
+        # 수정 실패
+        if result == False:
+            return render_template(
+                "book/result.html",
+                title="독후감 수정 실패",
+                msg="독후감 수정에 실패했습니다",
+                link="/book_review/list",
+                link_text="독후감목록")
+
+        # 수정 성공
+        return render_template(
+            "book/result.html",
+            title="독후감 수정 성공",
+            msg="독후감을 성공적으로 수정했습니다",
+            link="/book_review/detail/" + review_id,
+            link_text="수정된 독후감 보기")
+
+# ============================================
+# 독후감 상세보기
+# ============================================
+@app.route("/book_review/detail/<review_id>")
+def book_review_detail(review_id):
+    """
+    독후감 상세 페이지
+    - review_id로 독후감 정보 조회
+    - 해당 독후감의 도서 정보도 함께 조회
+    """
+    # 독후감 정보 조회 (JOIN으로 도서제목도 포함)
+    review = book_reviewdb.get_review_by_id(review_id)
+    
+    # 독후감이 없는 경우
+    if review == None:
+        return render_template(
+            "book/result.html",
+            title="독후감 검색 오류",
+            msg="없거나 삭제된 독후감입니다",
+            link="/book_review/list",
+            link_text="독후감목록")
+    
+    # 해당 독후감의 도서 정보 조회
+    book = bookdb.get_book_by_id(review["book_id"])
+    
+    # 도서 정보가 없는 경우
+    if book == None:
+        return render_template(
+            "book/result.html",
+            title="도서 검색 오류",
+            msg="해당 도서 정보를 찾을 수 없습니다",
+            link="/book_review/list",
+            link_text="독후감목록")
+    
+    # 독후감 상세 페이지 렌더링
+    return render_template(
+        "book_review/detail.html",
+        review=review,
+        book=book)
 
 # 독후감등록
 @app.route("/book_review/insert",methods=['GET','POST'])
