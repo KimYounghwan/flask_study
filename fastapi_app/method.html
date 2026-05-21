@@ -1,58 +1,91 @@
-<button onclick="getItem()">GET 조회</button>
-<button onclick="createItem()">POST 생성</button>
-<button onclick="updateItem()">PUT 수정</button>
-<button onclick="deleteItem()">DELETE 삭제</button>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
 
-<script>
-// ============================================
-// 1. GET - 데이터 조회
-// ============================================
-function getItem() {
-    fetch('http://127.0.0.1:8000/items')
+</head>
+<body>
+    <button onclick="getItem()">GET 조회</button>
+    <button onclick="createItem()">POST 생성</button>
+    <button onclick="updateItem()">PUT 수정</button>
+    <button onclick="deleteItem()">DELETE 삭제</button>
+
+    <div id="msg"></div>
+
+    <script>
+    // ============================================
+    // 1. GET - 데이터 조회
+    // ============================================
+    msg = document.querySelector("#msg")
+    function getItem() {
+        fetch('http://127.0.0.1:8000/items')
+            .then(res => res.json())
+            .then(data => {
+                msg.innerHTML=""
+                data.my_items.forEach(el => {
+                    msg.innerHTML += "<p>"+el+"</p>"
+                });
+            });
+    }
+
+    // ============================================
+    // 2. POST - 데이터 생성
+    // ============================================
+    function createItem() {
+        fetch('http://127.0.0.1:8000/items', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({
+                name: '사과',
+                price: 1000
+            }
+            // body:"{ 'name':'사과','price':1000 }"
+            )
+        })
+        .then(res => res.json())
+        .then(data => {
+            msg.innerHTML = ""
+            msg.innerHTML = data.message
+            msg.innerHTML += "<hr>"
+            msg.innerHTML += "price="+data.my_items.price
+            msg.innerHTML += "name="+data.my_items.name
+        });
+    }
+
+    // ============================================
+    // 3. PUT - 데이터 수정
+    // ============================================
+    function updateItem() {
+        fetch('http://127.0.0.1:8000/items/1', {
+            method: 'PUT',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({
+                name: '수정된사과',
+                price: 1500
+            })
+        })
         .then(res => res.json())
         .then(data => console.log(data));
-}
+    }
 
-// ============================================
-// 2. POST - 데이터 생성
-// ============================================
-function createItem() {
-    fetch('http://127.0.0.1:8000/items', {
-        method: 'POST',
-        headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify({
-            name: '사과',
-            price: 1000
+    // ============================================
+    // 4. DELETE - 데이터 삭제
+    // ============================================
+    function deleteItem() {
+        fetch('http://127.0.0.1:8000/items/1', {
+            method: 'DELETE'
         })
-    })
-    .then(res => res.json())
-    .then(data => console.log(data));
-}
+        .then(res => res.json())
+        .then(data => console.log(data));
+    }
+    </script>
 
-// ============================================
-// 3. PUT - 데이터 수정
-// ============================================
-function updateItem() {
-    fetch('http://127.0.0.1:8000/items/1', {
-        method: 'PUT',
-        headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify({
-            name: '수정된사과',
-            price: 1500
-        })
-    })
-    .then(res => res.json())
-    .then(data => console.log(data));
-}
+</body>
+</html>
 
-// ============================================
-// 4. DELETE - 데이터 삭제
-// ============================================
-function deleteItem() {
-    fetch('http://127.0.0.1:8000/items/1', {
-        method: 'DELETE'
-    })
-    .then(res => res.json())
-    .then(data => console.log(data));
-}
-</script>
+
+
+
+

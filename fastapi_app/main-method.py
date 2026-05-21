@@ -16,17 +16,19 @@ def read_items():
     GET /items
     모든 아이템 목록을 조회합니다
     """
-    return {"items": ["사과", "바나나", "오렌지"]}
+    return {"my_items": ["사과", "바나나", "오렌지"]}
 
 # ===== POST: 데이터 생성 =====
 @app.post("/items")
-def create_item():
+def create_item(data:dict):
     """
     POST /items
     새 아이템을 생성합니다
     (실습: 4회차에서 본문 데이터를 받는 방법 배움)
     """
-    return {"message": "아이템이 생성되었습니다"}
+    return {"message": "아이템이 생성되었습니다",
+            "my_items": data
+            }
 
 # ===== PUT: 데이터 전체 수정 =====
 @app.put("/items/{item_id}")
