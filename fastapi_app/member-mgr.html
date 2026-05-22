@@ -294,6 +294,7 @@
         list_page.style.display="block"
         register_page.style.display="none"
         detail_page.style.display="none"
+        show_list() //목록갱신
     }
     register_btn = document.querySelector("#register-btn")
     register_btn.onclick=function(){
@@ -324,11 +325,21 @@
                 s += "<td>"+el["age"]+"</td>"
                 s += '<td class="action-links">\
                     <a href="#" onclick="show_member('+el["student_id"]+')" class="edit-link">수정</a>\
-                    <a href="/user/delete/107" class="delete-link">삭제</a>\
+                    <a href="#" onclick="delete_member('+el["student_id"]+')" class="delete-link">삭제</a>\
                     </td>'
                     s += "</tr>"
                     member_tbody.innerHTML += s
                 });
+        }
+        function delete_member(mid){
+            // alert(mid)
+            let url = "http://localhost:8000/members/"+mid
+            fetch(url, {method:"DELETE"} )
+            .then(res=>res.json())
+            .then(data=>{
+                alert(data.message)
+                show_list()//회원목록갱신
+            })
         }
         function show_member(mid){
             // alert(mid)
@@ -372,10 +383,12 @@
             .then(res=>res.json())
             .then(data=>{
                 alert(data.message)
+                show_list() //목록갱신
             })
 
             return false
         }
+        // 수정
         detail_form.onsubmit=function(){
 
             let url = "http://localhost:8000/members"
@@ -393,6 +406,7 @@
             .then(res=>res.json())
             .then(data=>{
                 alert(data.message)
+                show_list() //목록갱신
             })
 
             return false

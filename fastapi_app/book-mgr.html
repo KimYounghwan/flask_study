@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>도서 및 독후감 관리 시스템</title>
+    <style>
+        /* 기본 스타일 리셋 및 레이아웃 */
+        body {
+            font-family: 'Malgun Gothic', sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f9f9f9;
+            color: #333;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: #fff;
+            border: 1px solid #ccc;
+            padding: 20px;
+        }
+
+        /* 상단 네비게이션 헤더 */
+        header {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            border-bottom: 2px solid #eee;
+            padding-bottom: 15px;
+            margin-bottom: 30px;
+        }
+        header a {
+            font-size: 24px;
+            font-weight: bold;
+            color: #000;
+            text-decoration: none;
+        }
+
+        /* 화면 전환 핵심 기능: 기본적으로 모든 섹션을 숨김 */
+        section {
+            display: none;
+            background: #f0f0f0;
+            border: 1px solid #999;
+            padding: 40px 20px;
+            min-height: 300px;
+            text-align: center;
+        }
+
+        /* 초기 상태(메인) 및 URL 해시(#)에 매칭되는 섹션만 표시 */
+        section#main { display: block; } /* 기본 화면 */
+        :target { display: block !important; }
+        :target ~ section#main { display: none; } /* 다른 화면이 켜지면 메인은 숨김 */
+
+        /* 이미지 UI 재현: 메인 화면 대시보드 박스 */
+        .dashboard {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-top: 40px;
+        }
+        .box {
+            width: 150px;
+            height: 150px;
+            border: 1px solid #666;
+            background: #fff;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            font-size: 16px;
+            font-weight: bold;
+            text-decoration: none;
+            color: #333;
+        }
+
+        /* 임시 테이블 및 폼 스타일 (초간단) */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background: #fff;
+        }
+        th, td {
+            border: 1px solid #ccc;
+            padding: 10px;
+            text-align: center;
+        }
+        .form-group {
+            margin-bottom: 15px;
+            text-align: left;
+            max-width: 400px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .form-group label { display: block; margin-bottom: 5px; font-weight: bold; }
+        .form-group input, .form-group textarea { width: 100%; padding: 8px; box-sizing: border-box; }
+        
+        /* 버튼 스타일 */
+        .btn {
+            display: inline-block;
+            padding: 8px 16px;
+            background: #555;
+            color: #fff;
+            text-decoration: none;
+            border: none;
+            cursor: pointer;
+            margin: 5px;
+        }
+        .btn-danger { background: #d9534f; }
+        .btn-primary { background: #0275d8; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <a href="#main">메인</a>
+        <a href="#book-list">도서</a>
+        <a href="#review-list">독후감</a>
+    </header>
+
+    <section id="main">
+        <div class="dashboard">
+            <a href="#book-list" class="box">
+                <span>총도서</span>
+                <span style="margin-top:10px;" id="book-count">25권</span>
+            </a>
+            <div class="box">
+                <span>총독후감</span>
+                <span style="margin-top:10px;" id="review-count">15개</span>
+            </div>
+        </div>
+    </section>
+
+    <section id="book-list">
+        <h2>도서 목록</h2>
+        <div style="text-align: right;">
+            <a href="#book-add" class="btn btn-primary">새 도서 등록</a>
+        </div>
+        <table>
+            <thead>
+                <tr>
+                    <th>번호</th>
+                    <th>도서명</th>
+                    <th>저자</th>
+                    <th>관리</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>1</td>
+                    <td><a href="#book-detail">자바스크립트 완벽 가이드</a></td>
+                    <td>데이비드 플래너건</td>
+                    <td>
+                        <a href="#book-edit" class="btn">수정</a>
+                        <a href="#book-delete" class="btn btn-danger">삭제</a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <a href="#main" class="btn">메인으로</a>
+    </section>
+
+    <section id="book-add">
+        <h2>도서 등록</h2>
+        <form action="#book-list" onsubmit="alert('등록되었습니다.');">
+            <div class="form-group">
+                <label>도서명</label>
+                <input type="text" required>
+            </div>
+            <div class="form-group">
+                <label>저자</label>
+                <input type="text" required>
+            </div>
+            <button type="submit" class="btn btn-primary">등록하기</button>
+            <a href="#book-list" class="btn">취소</a>
+        </form>
+    </section>
+
+    <section id="book-detail">
+        <h2>도서 상세 정보</h2>
+        <div style="background:#fff; padding:20px; text-align:left; max-width:500px; margin:0 auto; border:1px solid #ccc;">
+            <p><strong>도서명:</strong> 자바스크립트 완벽 가이드</p>
+            <p><strong>저자:</strong> 데이비드 플래너건</p>
+            <p><strong>출판사:</strong> 인사이트</p>
+            <p><strong>설명:</strong> 자바스크립트 핵심 언어 구조를 다루는 명저입니다.</p>
+        </div>
+        <div style="margin-top:20px;">
+            <a href="#book-edit" class="btn">수정하기</a>
+            <a href="#book-list" class="btn">목록으로</a>
+        </div>
+    </section>
+
+    <section id="book-edit">
+        <h2>도서 수정</h2>
+        <form action="#book-list" onsubmit="alert('수정되었습니다.');">
+            <div class="form-group">
+                <label>도서명</label>
+                <input type="text" value="자바스크립트 완벽 가이드">
+            </div>
+            <div class="form-group">
+                <label>저자</label>
+                <input type="text" value="데이비드 플래너건">
+            </div>
+            <button type="submit" class="btn btn-primary">저장하기</button>
+            <a href="#book-list" class="btn">취소</a>
+        </form>
+    </section>
+
+    <section id="book-delete">
+        <h2>도서 삭제 확인</h2>
+        <p style="font-size:18px; color:#d9534f; font-weight:bold;">정말로 이 도서를 삭제하시겠습니까?</p>
+        <p>삭제된 데이터는 복구할 수 없습니다.</p>
+        <div style="margin-top:30px;">
+            <a href="#book-list" class="btn btn-danger" onclick="alert('삭제되었습니다.');">네, 삭제합니다</a>
+            <a href="#book-list" class="btn">아니오, 취소합니다</a>
+        </div>
+    </section>
+</div>
+<script>
+    book_count = document.querySelector("#book-count")
+    review_count = document.querySelector("#review-count")
+
+    function load_count(){
+        let url = "http://localhost:8000/book_count"
+        fetch(url)
+        .then(res=>res.json())
+        .then(data=>{
+            book_count.innerHTML = data.count+"권"
+        })
+        url = "http://localhost:8000/review_count"
+        fetch(url)
+        .then(res=>res.json())
+        .then(data=>{
+            review_count.innerHTML = data.count+"개"
+        })
+    }
+    load_count()
+</script>
+</body>
+</html>

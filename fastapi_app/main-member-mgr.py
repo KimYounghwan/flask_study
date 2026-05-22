@@ -45,3 +45,10 @@ def get_member(mid):
         return {"code":0, "data":res}
     return {"code":1, "message":"없거나 삭제된 id입니다"}    
 
+# ===== DELETE: 데이터 삭제 =====
+@app.delete("/members/{student_id}")
+def delete_item(student_id: int):
+    res = stdentdb.delete_student(student_id)
+    if res :
+        return {"code":0, "message":"삭제 성공"}
+    return {"code":1, "message":"삭제 실패"}    
