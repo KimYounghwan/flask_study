@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>간단한 계산기 UI</title>
+    <style>
+        /* 초간단 스타일링 */
+        body {
+            font-family: sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f0f0f0;
+        }
+        .container {
+            background-color: #eaeaea;
+            border: 1px solid #ccc;
+            padding: 40px;
+            width: 400px;
+            box-sizing: border-box;
+        }
+        .row {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        .label {
+            width: 80px;
+            font-size: 16px;
+            color: #333;
+        }
+        input[type="text"] {
+            width: 200px;
+            padding: 5px;
+            font-size: 16px;
+            border: 1px solid #999;
+            background-color: #fff;
+        }
+        .btn-group {
+            margin-left: 80px;
+            margin-bottom: 15px;
+            display: flex;
+            gap: 10px;
+        }
+        button {
+            padding: 5px 20px;
+            font-size: 16px;
+            background-color: #fff;
+            border: 1px solid #666;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div class="row">
+            <div class="label">숫자 입력</div>
+            <input type="text" id="num-input">
+        </div>
+
+        <div class="btn-group">
+            <button type="button" onclick="count_add()">Add</button>
+            <button type="button" onclick="count_minus()">Minus</button>
+        </div>
+
+        <div class="row">
+            <div class="label">현재값</div>
+            <input type="text" id="result-input" readonly>
+        </div>
+    </div>
+
+    <script>
+        numinput = document.querySelector("#num-input")
+        resultinput = document.querySelector("#result-input")
+        function count_add(){
+            fetch("http://localhost:8000/count_add/"+numinput.value)
+            .then(res=>res.json())
+            .then(data=>{
+                resultinput.value=data.count
+            })
+        }
+        function count_minus(){
+            fetch("http://localhost:8000/count_minus/"+numinput.value)
+            .then(res=>res.json())
+            .then(data=>{
+                resultinput.value=data.count
+            })
+        }
+    </script>
+</body>
+</html>

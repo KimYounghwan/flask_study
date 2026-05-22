@@ -19,7 +19,7 @@
         }
 
         .container {
-            max-width: 800px;
+            max-width: 850px;
             margin: 0 auto;
         }
 
@@ -65,47 +65,39 @@
             padding-bottom: 12px;
         }
 
-        /* --------------------------------------------------
-           ★ 핵심: 자바스크립트 없는 화면 전환 라우팅 
-        -------------------------------------------------- */
-        /* 기본 상태: 모든 페이지를 숨김 */
-        #register-page, #list-page {
+        /* 자바스크립트 없는 화면 전환 라우팅 */
+        #register-page, #list-page, #detail-page {
             display: none;
         }
 
-        /* 1. URL 끝이 #register 일 때 등록 페이지 표시 */
         #register-page:target {
             display: block;
         }
 
-        /* 2. URL 끝이 #list 일 때 목록 페이지 표시 */
         #list-page:target {
             display: block;
         }
 
-        /* 3. 처음 접속했을 때(앵커가 없을 때) 기본값으로 목록 페이지를 표시 */
-        #register-page {
+        #list-page {
             display: block;
         }
-        /* 다만 다른 곳이 타겟팅 되면 기본 표시해둔 목록을 숨김 */
+        
         body:has(#register-page:target) #list-page {
             display: none;
         }
 
-        /* 활성화된 탭 버튼 시각 효과 (CSS 상위 선택자 활용) */
         body:has(#register-page:target) .btn-reg-tab,
         body:not(:has(#register-page:target)) .btn-list-tab {
             background-color: #3b82f6;
             color: #fff;
         }
 
-
         /* 폼 스타일 */
         .form-group {
             margin-bottom: 20px;
         }
 
-        .form-group label {
+        .form-group label.main-label {
             display: block;
             font-size: 14px;
             font-weight: 500;
@@ -113,7 +105,8 @@
             margin-bottom: 8px;
         }
 
-        .form-group input {
+        .form-group input[type="text"],
+        .form-group input[type="number"] {
             width: 100%;
             padding: 12px 14px;
             border: 1px solid #cbd5e1;
@@ -125,6 +118,28 @@
 
         .form-group input:focus {
             border-color: #3b82f6;
+        }
+
+        /* 성별 라디오 버튼 스타일 */
+        .radio-group {
+            display: flex;
+            gap: 20px;
+            padding-top: 4px;
+        }
+
+        .radio-label {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 14px;
+            color: #334155;
+            cursor: pointer;
+        }
+
+        .radio-label input {
+            width: 16px;
+            height: 16px;
+            cursor: pointer;
         }
 
         .btn-submit {
@@ -182,25 +197,70 @@
 <body>
 
 <div class="container">
-    <!-- 상단 탭 메뉴 (A 태그의 href와 각 페이지 id를 매칭) -->
+    <!-- 상단 탭 메뉴 -->
     <nav class="nav-tabs">
-        <a href="#list" class="tab-btn btn-list-tab">회원 목록</a>
-        <a href="#register" class="tab-btn btn-reg-tab">회원 등록</a>
+        <a href="#list" class="tab-btn btn-list-tab" id="list-btn">회원 목록</a>
+        <a href="#register" class="tab-btn btn-reg-tab" id="register-btn">회원 등록</a>
     </nav>
 
     <!-- [페이지 1] 회원 등록 화면 -->
     <div id="register-page" class="card">
         <h2 class="card-title">신규 회원 등록</h2>
-        <form action="/user/register" method="POST">
+        <form action="/user/register" method="POST" id="register-form">
             <div class="form-group">
-                <label for="username">사용자명</label>
+                <label for="username" class="main-label">사용자명</label>
                 <input type="text" id="username" name="username" placeholder="아무개">
             </div>
+            
+            <!-- 성별(Gender) 추가 -->
             <div class="form-group">
-                <label for="age">나이</label>
+                <label class="main-label">성별</label>
+                <div class="radio-group">
+                    <label class="radio-label">
+                        <input type="radio" id="gender_m" name="gender" value="M" checked> 남성
+                    </label>
+                    <label class="radio-label">
+                        <input type="radio" id="gender_f" name="gender" value="F"> 여성
+                    </label>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="age" class="main-label">나이</label>
                 <input type="number" id="age" name="age" min="1" max="99" placeholder="1 ~ 99 사이 입력">
             </div>
             <button type="submit" class="btn-submit">등록하기</button>
+        </form>
+    </div>
+
+<!-- [페이지 3] 회원 상세 화면 -->
+    <div id="detail-page" class="card">
+        <h2 class="card-title">회원 정보 상세</h2>
+        <form action="/user/register" method="POST" id="detail-form">
+            <div class="form-group">
+                <label for="username" class="main-label">사용자명</label>
+                <input type="hidden" id="student_id2">
+                <input type="text" id="username2" name="username" placeholder="아무개">
+            </div>
+            
+            <!-- 성별(Gender) 추가 -->
+            <div class="form-group">
+                <label class="main-label">성별</label>
+                <div class="radio-group">
+                    <label class="radio-label">
+                        <input type="radio" id="gender_m2" name="gender" value="M" checked> 남성
+                    </label>
+                    <label class="radio-label">
+                        <input type="radio" id="gender_f2" name="gender" value="F"> 여성
+                    </label>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="age" class="main-label">나이</label>
+                <input type="number" id="age2" name="age" min="1" max="99" placeholder="1 ~ 99 사이 입력">
+            </div>
+            <button type="submit" class="btn-submit">저장하기</button>
         </form>
     </div>
 
@@ -213,34 +273,145 @@
                     <tr>
                         <th>ID (user_id)</th>
                         <th>사용자명 (username)</th>
+                        <th>성별 (gender)</th>
                         <th>나이 (age)</th>
                         <th>관리</th>
                     </tr>
                 </thead>
-                <tbody>
-                    <tr>
-                        <td>107</td>
-                        <td>홍길동</td>
-                        <td>25</td>
-                        <td class="action-links">
-                            <a href="/user/edit/107" class="edit-link">수정</a>
-                            <a href="/user/delete/107" class="delete-link">삭제</a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>108</td>
-                        <td>아무개</td>
-                        <td>30</td>
-                        <td class="action-links">
-                            <a href="/user/edit/108" class="edit-link">수정</a>
-                            <a href="/user/delete/108" class="delete-link">삭제</a>
-                        </td>
-                    </tr>
+                <tbody id="member-tbody">
                 </tbody>
             </table>
         </div>
     </div>
 </div>
 
+<script>
+    detail_page = document.querySelector("#detail-page")
+    register_page = document.querySelector("#register-page")
+    list_page = document.querySelector("#list-page")
+    list_btn = document.querySelector("#list-btn")
+    list_btn.onclick=function(){
+        list_page.style.display="block"
+        register_page.style.display="none"
+        detail_page.style.display="none"
+    }
+    register_btn = document.querySelector("#register-btn")
+    register_btn.onclick=function(){
+        list_page.style.display="none"
+        register_page.style.display="block"
+        detail_page.style.display="none"
+    }
+    
+    // 회원목록 출력
+    function show_list(){
+        let url = "http://localhost:8000/members"
+        fetch(url)
+        .then(res=>res.json())
+        .then(data=>{
+            // alert("갯수="+data.data.length)
+            refresh_tbody(data.data)
+        })
+    }
+    // 회원목록 재작성
+    function refresh_tbody(data_list){
+        member_tbody = document.querySelector("#member-tbody")
+        member_tbody.innerHTML = "" //이전내용 삭제
+        data_list.forEach(el => {
+            let s = "<tr>"
+                s += "<td>"+el["student_id"]+"</td>"
+                s += "<td>"+el["name"]+"</td>"
+                s += "<td>"+el["gender"]+"</td>"
+                s += "<td>"+el["age"]+"</td>"
+                s += '<td class="action-links">\
+                    <a href="#" onclick="show_member('+el["student_id"]+')" class="edit-link">수정</a>\
+                    <a href="/user/delete/107" class="delete-link">삭제</a>\
+                    </td>'
+                    s += "</tr>"
+                    member_tbody.innerHTML += s
+                });
+        }
+        function show_member(mid){
+            // alert(mid)
+            let url = "http://localhost:8000/members/"+mid
+            fetch(url)
+            .then(res=>res.json())
+            .then(data=>{
+                // alert(JSON.stringify(data.data))
+                display_member(data.data)
+            })
+        }
+
+        show_list()
+        register_form = document.querySelector("#register-form")
+        detail_form = document.querySelector("#detail-form")
+        
+        gender_m = document.querySelector("#gender_m")
+        gender_f = document.querySelector("#gender_f")
+        age = document.querySelector("#age")
+        username = document.querySelector("#username")
+
+        student_id2 = document.querySelector("#student_id2")
+        gender_m2 = document.querySelector("#gender_m2")
+        gender_f2 = document.querySelector("#gender_f2")
+        age2 = document.querySelector("#age2")
+        username2 = document.querySelector("#username2")
+        
+        register_form.onsubmit=function(){
+
+            let url = "http://localhost:8000/members"
+            fetch(url, {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({
+                    name: username.value,
+                    age: age.value,
+                    gender: (gender_f.checked==true)?"F":"M",
+                }
+                )
+            })
+            .then(res=>res.json())
+            .then(data=>{
+                alert(data.message)
+            })
+
+            return false
+        }
+        detail_form.onsubmit=function(){
+
+            let url = "http://localhost:8000/members"
+            fetch(url, {
+                method: 'PUT',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({
+                    student_id: student_id2.value,
+                    name: username2.value,
+                    age: age2.value,
+                    gender: (gender_f2.checked==true)?"F":"M",
+                }
+                )
+            })
+            .then(res=>res.json())
+            .then(data=>{
+                alert(data.message)
+            })
+
+            return false
+        }
+        function display_member(data){
+            list_page.style.display="none"
+            register_page.style.display="none"            
+            detail_page.style.display="block"            
+            
+            student_id2.value = data["student_id"]
+            username2.value = data["name"]
+            age2.value = data["age"]
+            if(data["gender"]=="M"){
+                gender_m2.checked = "checked"
+            }else{
+                gender_f2.checked = "checked"
+            }
+
+        }
+        </script>
 </body>
 </html>
